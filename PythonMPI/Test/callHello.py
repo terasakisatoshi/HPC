@@ -27,14 +27,10 @@ print('I am rank {} of size {}'.format(rank,size))
 print(filelist)
 comm.Barrier()
 for file in filelist:
-    with open(file,'w') as f:
-        f.write("rank {} wrote this file".format(rank))
-    f.close()
     command="hello.exe"+" "+str(file)
     echo="echo "+command
     subprocess.call(echo,shell=True)
     subprocess.call(command,shell=True)
-    print("hoge")
 comm.Barrier()
 print('finish rank %s'%rank)
 
