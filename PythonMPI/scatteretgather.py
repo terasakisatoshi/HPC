@@ -18,4 +18,4 @@ v=v*v
 recvbuf=comm.gather(v,root)
 if comm.rank==0:
     print("the result is....")
-    print np.array(recvbuf)
+    print (np.array(recvbuf))
