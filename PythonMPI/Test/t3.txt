@@ -1,1 +1,1 @@
-rank 3 wrote this file
+<<<<<<< .minerank 3 wrote this file=======rank 0 wrote this file>>>>>>> .theirs

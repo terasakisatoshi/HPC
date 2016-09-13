@@ -14,9 +14,8 @@ if rank==0:
     for i,file in enumerate(files):
         partitions[i%size].append(file)
     print('partitions=%s\n'%partitions)
-
     for i in range(len(partitions)):
-        comm.send(partitions[i],dest=i,tag=i)
+        comm.isend(partitions[i],dest=i,tag=i)
 
 filelist=comm.recv(source=0,tag=rank)
 print('I am rank {} of size {}'.format(rank,size))
