@@ -8,7 +8,7 @@ print("I am rank {} I have sendmsg as {}".format(rank,sendmsg))
 recvmsg1=comm.reduce(sendmsg,op=MPI.SUM,root=0)
 
 if rank==0:
-    print(recvmsg1)
+    print("rank zero",recvmsg1)
 
 print("all reduce at rank {}".format(rank))
 recvmsg2=comm.allreduce(sendmsg,op=MPI.SUM)
