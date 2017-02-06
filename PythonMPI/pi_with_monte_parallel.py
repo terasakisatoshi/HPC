@@ -1,8 +1,10 @@
 from mpi4py import MPI 
 import time 
 import random
+from numba import jit
 
-max_iteration=10000000
+max_iteration=100000000
+@jit
 def calc_pi_single(iteration):
     counter=0
     for _ in range(iteration):
@@ -34,8 +36,8 @@ def main():
     iteration=0
     if myrank==master:
         start=time.time()
-        divided=divide_task([i for i in range(max_iteration)],nprocs)
-        args=[len(task) for task in divided]
+        iteration=max_iteration//nprocs
+        args=[ iteration  for _ in range(nprocs)]
     iteration=comm.scatter(args,root=master)
     pi_each_rank=calc_pi_single(iteration)
     results=comm.gather(pi_each_rank,root=master)

@@ -1,7 +1,11 @@
 import random 
 import multiprocessing as mp 
 import time 
-max_iteration=10000000
+from numba import jit
+
+max_iteration=100000000
+
+@jit
 def calc_pi_single(iteration):
     counter=0
     for _ in range(iteration):
@@ -25,9 +29,8 @@ def divide_task(task,nproc):
     return divided
 
 def calc_pi_multiprocessing(nproc=4):
-    task=[i for i in range(max_iteration)]
-    divided=divide_task(task,nproc)
-    args=[len(task) for task in divided]
+    iteration=max_iteration//nproc
+    args=[iteration for _ in range(nproc)]
     p=mp.Pool(nproc)
     results=p.map(calc_pi_single,args)
     avg=sum(results)/len(results)
@@ -41,7 +44,7 @@ def measure_time(args):
 
 def main():
     measure_time([calc_pi_single,max_iteration])
-    nproc=4
+    nproc=8
     measure_time([calc_pi_multiprocessing,nproc])
 if __name__ == '__main__':
     main()
